@@ -1,0 +1,36 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      k;
+}
+
+#include "include/initialConditions"
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform $turbulentKE;
+
+boundaryField
+{
+    inlet
+    {
+        type            inletOutlet;
+        inletValue      uniform $turbulentKE;
+        value           uniform $turbulentKE;
+    }
+
+    outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform $turbulentKE;
+        value           uniform $turbulentKE;
+    }
+
+    left  { type kqRWallFunction; value uniform $turbulentKE; }
+    right { type kqRWallFunction; value uniform $turbulentKE; }
+    front { type kqRWallFunction; value uniform $turbulentKE; }
+    back  { type kqRWallFunction; value uniform $turbulentKE; }
+    fan   { type kqRWallFunction; value uniform $turbulentKE; }
+}

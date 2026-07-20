@@ -1,0 +1,121 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+
+castellatedMesh true;
+snap            true;
+addLayers       false;
+
+geometry
+{
+    Fan_Centered_m.stl
+    {
+        type triSurfaceMesh;
+        name fan;
+    }
+
+    // Refinement box tightly around the fan disk
+    fanBox
+    {
+        type searchableBox;
+        min (-0.55 -0.60 -0.08);
+        max ( 0.55  0.60  0.08);
+    }
+}
+
+castellatedMeshControls
+{
+    maxLocalCells           500000;
+    maxGlobalCells          5000000;
+    minRefinementCells      10;
+    maxLoadUnbalance        0.10;
+    nCellsBetweenLevels     3;
+    resolveFeatureAngle     30;
+    allowFreeStandingZoneFaces true;
+    planarAngle             30;
+
+    features
+    (
+        {
+            file  "Fan_Centered_m.eMesh";
+            level 4;
+        }
+    );
+
+    refinementSurfaces
+    {
+        fan
+        {
+            level (4 5);
+            patchInfo { type wall; }
+        }
+    }
+
+    refinementRegions
+    {
+        fanBox
+        {
+            mode inside;
+            levels ((1E15 3));   // level 3 everywhere inside the box
+        }
+    }
+
+    locationInMesh (0 0 1.0);
+}
+
+snapControls
+{
+    nSmoothPatch            3;
+    tolerance               2.0;
+    nSolveIter              30;
+    nRelaxIter              5;
+    implicitFeatureSnap     false;
+    explicitFeatureSnap     true;
+    multiRegionFeatureSnap  false;
+    nFeatureSnapIter        10;
+}
+
+addLayersControls
+{
+    relativeSizes               true;
+    expansionRatio              1.2;
+    finalLayerThickness         0.3;
+    minThickness                0.1;
+    nGrow                       0;
+    featureAngle                60;
+    nRelaxIter                  3;
+    nSmoothSurfaceNormals       1;
+    nSmoothNormals              3;
+    nSmoothThickness            10;
+    maxFaceThicknessRatio       0.5;
+    maxThicknessToMedialRatio   0.3;
+    minMedialAxisAngle          90;
+    nBufferCellsNoExtrude       0;
+    nLayerIter                  50;
+    layers {}
+}
+
+meshQualityControls
+{
+    maxNonOrtho             65;
+    maxBoundarySkewness     20;
+    maxInternalSkewness     4;
+    maxConcave              80;
+    minFlatness             0.5;
+    minVol                  1e-13;
+    minTetQuality           -1e30;
+    minArea                 -1;
+    minTwist                0.02;
+    minDeterminant          0.001;
+    minFaceWeight           0.02;
+    minVolRatio             0.01;
+    minTriangleTwist        -1;
+    nSmoothScale            4;
+    errorReduction          0.75;
+}
+
+mergeTolerance 1e-6;

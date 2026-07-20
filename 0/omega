@@ -1,0 +1,36 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      omega;
+}
+
+#include "include/initialConditions"
+
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField   uniform $turbulentOmega;
+
+boundaryField
+{
+    inlet
+    {
+        type            inletOutlet;
+        inletValue      uniform $turbulentOmega;
+        value           uniform $turbulentOmega;
+    }
+
+    outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform $turbulentOmega;
+        value           uniform $turbulentOmega;
+    }
+
+    left  { type omegaWallFunction; value uniform $turbulentOmega; }
+    right { type omegaWallFunction; value uniform $turbulentOmega; }
+    front { type omegaWallFunction; value uniform $turbulentOmega; }
+    back  { type omegaWallFunction; value uniform $turbulentOmega; }
+    fan   { type omegaWallFunction; value uniform $turbulentOmega; }
+}
