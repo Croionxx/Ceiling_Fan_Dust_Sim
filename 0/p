@@ -14,19 +14,36 @@ boundaryField
 {
     inlet
     {
-        type            fixedValue;
-        value           uniform 0;
+        type            zeroGradient;
     }
 
     outlet
     {
-        type            fixedValue;
-        value           uniform 0;
+        type            zeroGradient;
     }
 
-    left  { type zeroGradient; }
-    right { type zeroGradient; }
-    front { type zeroGradient; }
-    back  { type zeroGradient; }
-    fan   { type zeroGradient; }
+    fan
+    {
+        type            zeroGradient;
+    }
+
+    left
+    {
+        type            zeroGradient;
+    }
+
+    right
+    {
+        type            zeroGradient;
+    }
+
+    front
+    {
+        type            zeroGradient;
+    }
+
+    back
+    {
+        type            zeroGradient;
+    }
 }

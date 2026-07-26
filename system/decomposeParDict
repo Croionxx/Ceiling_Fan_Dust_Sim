@@ -6,6 +6,6 @@ FoamFile
     object      decomposeParDict;
 }
 
-numberOfSubdomains  8;
+numberOfSubdomains  6;
 
 method          scotch;   // automatic, no need to specify geometry

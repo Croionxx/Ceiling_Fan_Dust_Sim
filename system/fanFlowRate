@@ -1,0 +1,19 @@
+// Flow rate through a horizontal plane 30cm below the fan
+type            surfaceFieldValue;
+libs            (fieldFunctionObjects);
+writeControl    timeStep;
+writeInterval   1;
+log             yes;
+writeFields     no;
+
+regionType      sampledSurface;
+sampledSurfaceDict
+{
+    type        plane;
+    point       (0 0 -0.30);
+    normal      (0 0 -1);
+    interpolate true;
+}
+
+operation       areaNormalIntegrate;
+fields          (U);

@@ -5,3 +5,19 @@ FoamFile
     class       dictionary;
     object      MRFProperties;
 }
+
+MRF1
+{
+    cellZone        fanZone;
+
+    active          yes;
+
+    // Patches that are NOT rotating (stationary walls, inlet, outlet)
+    nonRotatingPatches (inlet outlet left right front back);
+
+    origin          (0 0 0);
+    axis            (0 0 -1);      // -Z = downwash (summer mode)
+
+    // 150 RPM = 150 * 2*pi/60 = 15.708 rad/s
+    omega           15.708;
+}

@@ -8,7 +8,7 @@ FoamFile
 
 castellatedMesh true;
 snap            true;
-addLayers       false;
+addLayers       true;
 
 geometry
 {
@@ -18,31 +18,47 @@ geometry
         name fan;
     }
 
-    // Refinement box tightly around the fan disk
-    fanBox
+    fanCylinder
     {
-        type searchableBox;
-        min (-0.55 -0.60 -0.08);
-        max ( 0.55  0.60  0.08);
+        type searchableCylinder;
+        point1 (0 0 -0.05);
+        point2 (0 0  0.05);
+        radius 0.60;
+    }
+
+    bladeCylinder
+    {
+        type searchableCylinder;
+        point1 (0 0 -0.035);
+        point2 (0 0  0.035);
+        radius 0.55;
+    }
+
+    wakeCylinder
+    {
+        type searchableCylinder;
+        point1 (0 0 -0.80);
+        point2 (0 0  0.00);
+        radius 0.65;
     }
 }
 
 castellatedMeshControls
 {
-    maxLocalCells           500000;
-    maxGlobalCells          5000000;
+    maxLocalCells           20000000;
+    maxGlobalCells          25000000;
     minRefinementCells      10;
     maxLoadUnbalance        0.10;
     nCellsBetweenLevels     3;
-    resolveFeatureAngle     30;
+    resolveFeatureAngle     25;
     allowFreeStandingZoneFaces true;
-    planarAngle             30;
+    planarAngle             25;
 
     features
     (
         {
             file  "Fan_Centered_m.eMesh";
-            level 4;
+            level 5;
         }
     );
 
@@ -50,58 +66,79 @@ castellatedMeshControls
     {
         fan
         {
-            level (4 5);
+            level  (5 6);
             patchInfo { type wall; }
         }
     }
 
     refinementRegions
     {
-        fanBox
+        bladeCylinder
         {
             mode inside;
-            levels ((1E15 3));   // level 3 everywhere inside the box
+            levels  ((1E15 4));
+        }
+
+        fanCylinder
+        {
+            mode inside;
+            levels  ((1E15 3));
+        }
+
+        wakeCylinder
+        {
+            mode inside;
+            levels  ((1E15 2));
         }
     }
 
-    locationInMesh (0 0 1.0);
+    locationInMesh  (0 0 1.0);
 }
 
 snapControls
 {
-    nSmoothPatch            3;
-    tolerance               2.0;
-    nSolveIter              30;
-    nRelaxIter              5;
+    nSmoothPatch            5;
+    tolerance               1.5;
+    nSolveIter              50;
+    nRelaxIter              8;
     implicitFeatureSnap     false;
     explicitFeatureSnap     true;
     multiRegionFeatureSnap  false;
-    nFeatureSnapIter        10;
+    nFeatureSnapIter        15;
 }
 
 addLayersControls
 {
-    relativeSizes               true;
-    expansionRatio              1.2;
-    finalLayerThickness         0.3;
-    minThickness                0.1;
-    nGrow                       0;
-    featureAngle                60;
-    nRelaxIter                  3;
-    nSmoothSurfaceNormals       1;
-    nSmoothNormals              3;
-    nSmoothThickness            10;
-    maxFaceThicknessRatio       0.5;
-    maxThicknessToMedialRatio   0.3;
-    minMedialAxisAngle          90;
-    nBufferCellsNoExtrude       0;
-    nLayerIter                  50;
-    layers {}
+    relativeSizes           true;
+    expansionRatio          1.2;
+    finalLayerThickness     0.4;
+    minThickness            0.05;
+    nGrow                   0;
+    featureAngle            130;
+    slipFeatureAngle        30;
+    nRelaxIter              5;
+    nSmoothSurfaceNormals   3;
+    nSmoothNormals          3;
+    nSmoothThickness        10;
+    maxFaceThicknessRatio   0.5;
+    maxThicknessToMedialRatio 0.3;
+    minMedialAxisAngle      90;
+    nBufferCellsNoExtrude   0;
+    nLayerIter              100;
+    nRelaxedIter            20;
+
+    layers
+    {
+        fan
+        {
+            nSurfaceLayers  5;
+        }
+    }
 }
 
 meshQualityControls
 {
-    maxNonOrtho             65;
+    maxNonOrtho             70;
     maxBoundarySkewness     20;
     maxInternalSkewness     4;
     maxConcave              80;
@@ -116,6 +153,11 @@ meshQualityControls
     minTriangleTwist        -1;
     nSmoothScale            4;
     errorReduction          0.75;
+
+    relaxed
+    {
+        maxNonOrtho  75;
+    }
 }
 
 mergeTolerance 1e-6;

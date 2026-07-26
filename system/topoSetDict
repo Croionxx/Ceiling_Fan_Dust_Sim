@@ -1,0 +1,22 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+
+actions
+(
+    {
+        name    fanZone;
+        type    cellZoneSet;
+        action  new;
+        source  cylinderToCell;
+        // Fan STL extends to z=±0.03m (60mm total height)
+        // MRF zone must fully enclose blade: ±0.035m with 5mm margin
+        point1  (0 0 -0.035);
+        point2  (0 0  0.035);
+        radius  0.65;
+    }
+);

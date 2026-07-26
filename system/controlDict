@@ -1,57 +1,53 @@
-FoamFile
-{
-    version     2.0;
-    format      ascii;
-    class       dictionary;
-    object      controlDict;
+FoamFile {
+  version 2.0;
+  format ascii;
+  class dictionary;
+  object controlDict;
 }
 
-application     simpleFoam;
+application simpleFoam;
 
-startFrom       startTime;
-startTime       0;
-stopAt          endTime;
-endTime         500;
-deltaT          1;
+startFrom startTime;
+startTime 0;
+stopAt endTime;
+endTime 500;
+deltaT 1;
 
-writeControl    timeStep;
-writeInterval   100;
-purgeWrite      3;
+writeControl timeStep;
+writeInterval 100;
+purgeWrite 3;
 
-writeFormat     binary;
-writePrecision  6;
+writeFormat binary;
+writePrecision 6;
 writeCompression off;
-timeFormat      general;
-timePrecision   6;
+timeFormat general;
+timePrecision 6;
 runTimeModifiable true;
 
-functions
-{
-    flowRateOutlet
-    {
-        type            surfaceFieldValue;
-        libs            (fieldFunctionObjects);
-        writeControl    timeStep;
-        writeInterval   10;
-        log             yes;
-        writeFields     no;
-        regionType      patch;
-        name            outlet;
-        operation       sum;
-        fields          (phi);
-    }
+functions {
+  flowRateOutlet {
+    type surfaceFieldValue;
+    libs(fieldFunctionObjects);
+    writeControl timeStep;
+    writeInterval 10;
+    log yes;
+    writeFields no;
+    regionType patch;
+    name outlet;
+    operation sum;
+    fields(phi);
+  }
 
-    flowRateInlet
-    {
-        type            surfaceFieldValue;
-        libs            (fieldFunctionObjects);
-        writeControl    timeStep;
-        writeInterval   10;
-        log             yes;
-        writeFields     no;
-        regionType      patch;
-        name            inlet;
-        operation       sum;
-        fields          (phi);
-    }
+  flowRateInlet {
+    type surfaceFieldValue;
+    libs(fieldFunctionObjects);
+    writeControl timeStep;
+    writeInterval 10;
+    log yes;
+    writeFields no;
+    regionType patch;
+    name inlet;
+    operation sum;
+    fields(phi);
+  }
 }

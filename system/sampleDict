@@ -1,0 +1,49 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      sampleDict;
+}
+
+type            sets;
+libs            (sampling);
+
+writeControl    writeTime;
+interpolationScheme cellPoint;
+setFormat       csv;
+
+fields          (U p k);
+
+sets
+(
+    // Vertical line through fan center (z-axis downwash profile)
+    centerline_vertical
+    {
+        type        lineUniform;
+        axis        z;
+        start       (0 0 -0.85);
+        end         (0 0 1.75);
+        nPoints     200;
+    }
+
+    // Horizontal line at 0.5m below fan (typical measurement height)
+    horizontal_below_fan
+    {
+        type        lineUniform;
+        axis        x;
+        start       (-1.7 0 -0.5);
+        end         (1.7 0 -0.5);
+        nPoints     200;
+    }
+
+    // Horizontal line at fan level
+    horizontal_fan_level
+    {
+        type        lineUniform;
+        axis        x;
+        start       (-1.7 0 0);
+        end         (1.7 0 0);
+        nPoints     200;
+    }
+);

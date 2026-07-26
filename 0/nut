@@ -12,11 +12,45 @@ internalField   uniform 0;
 
 boundaryField
 {
-    inlet  { type calculated; value uniform 0; }
-    outlet { type calculated; value uniform 0; }
-    left   { type nutkWallFunction; value uniform 0; }
-    right  { type nutkWallFunction; value uniform 0; }
-    front  { type nutkWallFunction; value uniform 0; }
-    back   { type nutkWallFunction; value uniform 0; }
-    fan    { type nutkWallFunction; value uniform 0; }
+    inlet
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+
+    outlet
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+
+    fan
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+
+    left
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+
+    right
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+
+    front
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+
+    back
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
 }

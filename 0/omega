@@ -6,31 +6,51 @@ FoamFile
     object      omega;
 }
 
-#include "include/initialConditions"
-
 dimensions      [0 0 -1 0 0 0 0];
 
-internalField   uniform $turbulentOmega;
+internalField   uniform 5;
 
 boundaryField
 {
     inlet
     {
-        type            inletOutlet;
-        inletValue      uniform $turbulentOmega;
-        value           uniform $turbulentOmega;
+        type            omegaWallFunction;
+        value           uniform 5;
     }
 
     outlet
     {
-        type            inletOutlet;
-        inletValue      uniform $turbulentOmega;
-        value           uniform $turbulentOmega;
+        type            omegaWallFunction;
+        value           uniform 5;
     }
 
-    left  { type omegaWallFunction; value uniform $turbulentOmega; }
-    right { type omegaWallFunction; value uniform $turbulentOmega; }
-    front { type omegaWallFunction; value uniform $turbulentOmega; }
-    back  { type omegaWallFunction; value uniform $turbulentOmega; }
-    fan   { type omegaWallFunction; value uniform $turbulentOmega; }
+    fan
+    {
+        type            omegaWallFunction;
+        value           uniform 5;
+    }
+
+    left
+    {
+        type            omegaWallFunction;
+        value           uniform 5;
+    }
+
+    right
+    {
+        type            omegaWallFunction;
+        value           uniform 5;
+    }
+
+    front
+    {
+        type            omegaWallFunction;
+        value           uniform 5;
+    }
+
+    back
+    {
+        type            omegaWallFunction;
+        value           uniform 5;
+    }
 }

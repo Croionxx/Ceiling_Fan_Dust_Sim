@@ -1,0 +1,6 @@
+/* dynamicCode:
+ * SHA1 = 6377c08eba248a5b9134d13eaa34fa11c2e9903e
+ */
+functionObjectTemplate.C
+
+LIB = $(PWD)/../platforms/$(WM_OPTIONS)/lib/libwriteMRFzone_6377c08eba248a5b9134d13eaa34fa11c2e9903e
